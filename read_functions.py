@@ -43,3 +43,24 @@ def byte_read_text(file_name: str) -> bytes:
     except OSError as err:
         logging.warning(f"Text was not read from file {file_name}\n{err}!")
     return text
+
+
+def read_private_key(private_pem: str):
+    """Reading the private key from the .permissions file.
+
+    Args:
+        private_pem (str): name of .pem file.
+
+    Returns:
+        _type_: private key for asymmetric encoding algorithm.
+    """
+    private_key = None
+    try:
+        with open(private_pem, "rb") as pem_in:
+            private_bytes = pem_in.read()
+        private_key = load_pem_private_key(private_bytes, password=None)
+        logging.info(f"Private key successfully loaded from {private_pem}!")
+    except OSError as err:
+        logging.warning(
+            f"Private key was not loaded from file {private_pem}\n{err}!")
+    return private_key
