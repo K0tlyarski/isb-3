@@ -37,3 +37,19 @@ def asymmetric_key_encryption(public_key, symmetric_key: bytes) -> bytes:
         mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
     logging.info("Asymmetric encryption was successful!")
     return encrypted_symmetric_key
+
+
+def asymmetric_key_decryption(private_key, symmetric_key: bytes) -> bytes:
+    """Decryption of the symmetric key.
+
+    Args:
+        private_key (_type_): private key for asymmetric encryption.
+        symmetric_key (bytes): symmetric key for symmetric encryption.
+
+    Returns:
+        bytes: decrypted symmetric key.
+    """
+    decrypted_symmetric_key = private_key.decrypt(symmetric_key, padding.OAEP(mgf=padding.MGF1(
+        algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
+    logging.info("Asymmetric decryption was successful!")
+    return decrypted_symmetric_key
