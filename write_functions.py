@@ -19,3 +19,23 @@ def byte_write_text(text: bytes, file_name: str) -> None:
         logging.info(f"Text was successfully written to file {file_name}!")
     except OSError as err:
         logging.warning(f"Text was not written to file {file_name}\n{err}!")
+
+
+def write_private_key(private_key, private_pem: str) -> None:
+    """Recording opening and closing keys in .pes files.
+
+    Args:
+        private_key (_type_): private key for asymmetric encoding algorithm.
+        public_key (_type_): public key for asymmetric encoding algorithm.
+        private_pem (str): name of .pem file for private key.
+        public_pem (str): name of .pem file for public key.
+    """
+    try:
+        with open(private_pem, "wb") as private_out:
+            private_out.write(private_key.private_bytes(encoding=serialization.Encoding.PEM,
+                                                        format=serialization.PrivateFormat.TraditionalOpenSSL,
+                                                        encryption_algorithm=serialization.NoEncryption()))
+        logging.info(f"Private key successfully saved to {private_pem}!")
+    except OSError as err:
+        logging.warning(
+            f"Private key was not saved to file {private_pem}\n{err}!")
