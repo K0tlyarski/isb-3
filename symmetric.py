@@ -37,3 +37,24 @@ def symmetric_encryption(key: bytes, text: bytes) -> bytes:
     cipher_text = encryptor.update(padded_text) + encryptor.finalize()
     logging.info("Symmetric encryption was successful!")
     return iv + cipher_text
+
+
+def symmetric_decryption(key: bytes, cipher_text: bytes) -> bytes:
+    """Decrypts the encrypted text using a symmetric key.
+
+    Args:
+        key (bytes): symmetric key that is needed to encrypt the text.
+        cipher_text (bytes): ciphertext with iv.
+
+    Returns:
+        bytes: decrypted text.
+    """
+    iv = cipher_text[:16]
+    cipher_text = cipher_text[16:]
+    cipher = Cipher(algorithms.SEED(key), modes.CBC(iv))
+    decryptor = cipher.decryptor()
+    text = decryptor.update(cipher_text) + decryptor.finalize()
+    unpadder = padding.ANSIX923(128).unpadder()
+    result = unpadder.update(text) + unpadder.finalize()
+    logging.info("Symmetric decryption was successful!")
+    return result
