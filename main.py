@@ -11,6 +11,10 @@ SETTINGS_FILE = "files/settings.json"
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    parser.add_argument("-set", "--settings", type=str, default=SETTINGS_FILE,
+                        help="Позволяет использовать собственный json-файл с указанием "
+                             "необходимых настроек"
+                             "(Введите путь к файлу)")
     group = parser.add_mutually_exclusive_group(required = True)
     group.add_argument('-gen','--generation',help='Запускает режим генерации ключей')
     group.add_argument('-enc','--encryption',help='Запускает режим шифрования')
