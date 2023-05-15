@@ -25,3 +25,21 @@ def read_settings(settings_file: str) -> dict:
         logging.warning(
             f"Settings was not read from file{settings_file}\n{err}")
     return settings
+
+
+def byte_read_text(file_name: str) -> bytes:
+    """Reading a text file in "rb" mode.
+
+    Args:
+        file_name (str): path to .txt file.
+
+    Returns:
+        bytes: text in form of bytes.
+    """
+    try:
+        with open(file_name, "rb") as text_file:
+            text = text_file.read()
+        logging.info(f"Text was successfully read from file {file_name}!")
+    except OSError as err:
+        logging.warning(f"Text was not read from file {file_name}\n{err}!")
+    return text
